@@ -38,11 +38,27 @@ void easymotionActionDispatch(std::string args)
 
 void addEasyMotionKeybinds()
 {
+	// Todo: allow use shortcut key
+	
+	// SMotionActionDesc tempMotionActionDesc;
+	// int key_idx;
+	g_pKeybindManager->addKeybind(SKeybind{"escape", 0, 0, 0, "easymotionexit", "", 0, "__easymotionsubmap__", 0, 0, 0, 0, 0, 0});
 
-		g_pKeybindManager->addKeybind(SKeybind{"escape", 0, 0, 0, "easymotionexit", "", 0, "__easymotionsubmap__", 0, 0, 0, 0, 0, 0});
+	// test
+	// g_pKeybindManager->addKeybind(SKeybind{"q", 0, 0, g_pKeybindManager->stringToModMask("alt"), "killactive", "", 0, "__easymotionsubmap__", 0, 0, 0, 0, 0, 0});
+	// g_pKeybindManager->addKeybind(SKeybind{"left", 0, 0, g_pKeybindManager->stringToModMask("alt"), "killactive", "", 0, "__easymotionsubmap__", 0, 0, 0, 0, 0, 0});
+	// g_pKeybindManager->addKeybind(SKeybind{"right", 0, 0, g_pKeybindManager->stringToModMask("alt"), "killactive", "", 0, "__easymotionsubmap__", 0, 0, 0, 0, 0, 0});
+	// g_pKeybindManager->addKeybind(SKeybind{"up", 0, 0, g_pKeybindManager->stringToModMask("alt"), "killactive", "", 0, "__easymotionsubmap__", 0, 0, 0, 0, 0, 0});
+	// g_pKeybindManager->addKeybind(SKeybind{"down", 0, 0, g_pKeybindManager->stringToModMask("alt"), "killactive", "", 0, "__easymotionsubmap__", 0, 0, 0, 0, 0, 0});
 
-	  //catchall
-		g_pKeybindManager->addKeybind(SKeybind{"", 0, 1, 0, "", "", 0, "__easymotionsubmap__", 0, 0, 0, 0, 0, 0});
+
+	//catchall
+	g_pKeybindManager->addKeybind(SKeybind{"", 0, 1, 0, "", "", 0, "__easymotionsubmap__", 0, 0, 0, 0, 0, 0});
+	// auto KEYSLENGTH = tempMotionActionDesc.motionKeys.length();
+	// for(key_idx = 0;key_idx < KEYSLENGTH;key_idx++) {
+	// 	auto lstr = tempMotionActionDesc.motionKeys.substr(key_idx, 1);
+	// 	g_pKeybindManager->addKeybind(SKeybind{lstr, 0, 0, 0, "easymotionexit", "", 0, "__easymotionsubmap__", 0, 0, 0, 0, 0, 0});
+	// }
 
 }
 
