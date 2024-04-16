@@ -98,18 +98,28 @@ static bool parseBorderGradient(std::string VALUE, CGradientValueData *DATA) {
 }
 void easymotionDispatch(std::string args)
 {
+	unsigned int CLIENTNUM = 0;
 
+    for (auto &w : g_pCompositor->m_vWindows){
+		CWindow *pWindow = w.get();
+		if (pWindow->m_iWorkspaceID == g_pCompositor->m_pLastMonitor->activeWorkspace && !pWindow->isHidden() && pWindow->m_bIsMapped && !pWindow->m_bFadingOut) {
+			CLIENTNUM++;
+		}
+	}
 
-		static auto *const TEXTSIZE = (Hyprlang::INT* const*)HyprlandAPI::getConfigValue(PHANDLE, "plugin:easymotion:textsize")->getDataStaticPtr();
+	if (CLIENTNUM == 0) {
+		return;
+	}
 
-	  static auto *const TEXTCOLOR = (Hyprlang::INT* const *)HyprlandAPI::getConfigValue(PHANDLE, "plugin:easymotion:textcolor")->getDataStaticPtr();
-		static auto *const BGCOLOR = (Hyprlang::INT* const *)HyprlandAPI::getConfigValue(PHANDLE, "plugin:easymotion:bgcolor")->getDataStaticPtr();
-		static auto *const TEXTFONT = (Hyprlang::STRING const *)HyprlandAPI::getConfigValue(PHANDLE, "plugin:easymotion:textfont")->getDataStaticPtr();
-		static auto *const TEXTPADDING = (Hyprlang::STRING const *)HyprlandAPI::getConfigValue(PHANDLE, "plugin:easymotion:textpadding")->getDataStaticPtr();
-		static auto *const BORDERSIZE = (Hyprlang::INT* const *)HyprlandAPI::getConfigValue(PHANDLE, "plugin:easymotion:bordersize")->getDataStaticPtr();
-		static auto *const BORDERCOLOR = (Hyprlang::STRING const *)HyprlandAPI::getConfigValue(PHANDLE, "plugin:easymotion:bordercolor")->getDataStaticPtr();
-		static auto *const ROUNDING = (Hyprlang::INT* const *)HyprlandAPI::getConfigValue(PHANDLE, "plugin:easymotion:rounding")->getDataStaticPtr();
-		static auto *const MOTIONKEYS = (Hyprlang::STRING const *)HyprlandAPI::getConfigValue(PHANDLE, "plugin:easymotion:motionkeys")->getDataStaticPtr();
+	static auto *const TEXTSIZE = (Hyprlang::INT* const*)HyprlandAPI::getConfigValue(PHANDLE, "plugin:easymotion:textsize")->getDataStaticPtr();
+	static auto *const TEXTCOLOR = (Hyprlang::INT* const *)HyprlandAPI::getConfigValue(PHANDLE, "plugin:easymotion:textcolor")->getDataStaticPtr();
+	static auto *const BGCOLOR = (Hyprlang::INT* const *)HyprlandAPI::getConfigValue(PHANDLE, "plugin:easymotion:bgcolor")->getDataStaticPtr();
+	static auto *const TEXTFONT = (Hyprlang::STRING const *)HyprlandAPI::getConfigValue(PHANDLE, "plugin:easymotion:textfont")->getDataStaticPtr();
+	static auto *const TEXTPADDING = (Hyprlang::STRING const *)HyprlandAPI::getConfigValue(PHANDLE, "plugin:easymotion:textpadding")->getDataStaticPtr();
+	static auto *const BORDERSIZE = (Hyprlang::INT* const *)HyprlandAPI::getConfigValue(PHANDLE, "plugin:easymotion:bordersize")->getDataStaticPtr();
+	static auto *const BORDERCOLOR = (Hyprlang::STRING const *)HyprlandAPI::getConfigValue(PHANDLE, "plugin:easymotion:bordercolor")->getDataStaticPtr();
+	static auto *const ROUNDING = (Hyprlang::INT* const *)HyprlandAPI::getConfigValue(PHANDLE, "plugin:easymotion:rounding")->getDataStaticPtr();
+	static auto *const MOTIONKEYS = (Hyprlang::STRING const *)HyprlandAPI::getConfigValue(PHANDLE, "plugin:easymotion:motionkeys")->getDataStaticPtr();
 
 	CVarList emargs(args, 0, ',');
 	SMotionActionDesc actionDesc;
