@@ -2,7 +2,7 @@
 
 #include <cairo/cairo.h>
 #include <hyprland/src/Compositor.hpp>
-#include <hyprland/src/desktop/Window.hpp>
+#include <hyprland/src/Window.hpp>
 #include <hyprland/src/render/decorations/IHyprWindowDecoration.hpp>
 #include <pango/pangocairo.h>
 
@@ -107,15 +107,15 @@ void CHyprEasyLabel::renderMotionString(Vector2D& bufferSize, const float scale)
 }
 
 
-void CHyprEasyLabel::draw(CMonitor* pMonitor, float a) {
+void CHyprEasyLabel::draw(CMonitor *pMonitor, float a, const Vector2D& offset) {
     if (!g_pCompositor->windowValidMapped(m_pWindow))
         return;
 
     if (!m_pWindow->m_sSpecialRenderData.decorate)
         return;
 
-    const auto PWORKSPACE      = m_pWindow->m_pWorkspace;
-    const auto WORKSPACEOFFSET = PWORKSPACE && !m_pWindow->m_bPinned ? PWORKSPACE->m_vRenderOffset.value() : Vector2D();
+    const auto PWORKSPACE      = g_pCompositor->getWorkspaceByID(m_pWindow->m_iWorkspaceID);
+    const auto WORKSPACEOFFSET = PWORKSPACE && !m_pWindow->m_bPinned ? PWORKSPACE->m_vRenderOffset.vec() : Vector2D();
 
     const auto ROUNDING = m_iRounding; 
 
@@ -150,7 +150,7 @@ void CHyprEasyLabel::draw(CMonitor* pMonitor, float a) {
 		}
 
 
-		g_pHyprOpenGL->renderTexture(m_tTextTex, &motionBox, a);
+		g_pHyprOpenGL->renderTexture(m_tTextTex, &motionBox, a,1);
 
     g_pHyprOpenGL->scissor((CBox*)nullptr);
 }
@@ -179,15 +179,15 @@ CBox CHyprEasyLabel::assignedBoxGlobal() {
 
 		double boxHeight, boxWidth;
 		double boxSize;
-		boxHeight = m_pWindow->m_vRealSize.value().y * 0.10;
-		boxWidth = m_pWindow->m_vRealSize.value().x * 0.10;
+		boxHeight = m_pWindow->m_vRealSize.vec().y * 0.10;
+		boxWidth = m_pWindow->m_vRealSize.vec().x * 0.10;
 		boxSize = std::min(boxHeight, boxWidth);
-	  double boxX = m_pWindow->m_vRealPosition.value().x + (m_pWindow->m_vRealSize.value().x-boxSize)/2;
-	  double boxY = m_pWindow->m_vRealPosition.value().y + (m_pWindow->m_vRealSize.value().y-boxSize)/2;
+	  double boxX = m_pWindow->m_vRealPosition.vec().x + (m_pWindow->m_vRealSize.vec().x-boxSize)/2;
+	  double boxY = m_pWindow->m_vRealPosition.vec().y + (m_pWindow->m_vRealSize.vec().y-boxSize)/2;
     CBox box = {boxX, boxY, boxSize, boxSize};
 
-    const auto PWORKSPACE      = m_pWindow->m_pWorkspace;
-    const auto WORKSPACEOFFSET = PWORKSPACE && !m_pWindow->m_bPinned ? PWORKSPACE->m_vRenderOffset.value() : Vector2D();
+    const auto PWORKSPACE      = g_pCompositor->getWorkspaceByID(m_pWindow->m_iWorkspaceID);
+    const auto WORKSPACEOFFSET = PWORKSPACE && !m_pWindow->m_bPinned ? PWORKSPACE->m_vRenderOffset.vec() : Vector2D();
 
     return box.translate(WORKSPACEOFFSET);
 }

@@ -4,7 +4,7 @@
 #include <any>
 #include <ranges>
 #include <hyprland/src/Compositor.hpp>
-#include <hyprland/src/desktop/Window.hpp>
+#include <hyprland/src/Window.hpp>
 #include <hyprland/src/config/ConfigManager.hpp>
 
 #include "easymotionDeco.hpp"
@@ -167,7 +167,7 @@ void easymotionDispatch(std::string args)
 
 	for (auto &w : g_pCompositor->m_vWindows) {
 		for (auto &m : g_pCompositor->m_vMonitors) {
-			if (w->m_pWorkspace == m->activeWorkspace) {
+			if (w->m_iWorkspaceID == m->activeWorkspace) {
 					std::string lstr = actionDesc.motionKeys.substr(key_idx++, 1);
 					addLabelToWindow(w.get(), &actionDesc, lstr);
 			}
