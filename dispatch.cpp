@@ -70,6 +70,7 @@ void easymotionActionDispatch(std::string args)
 {
 	for (auto &ml : g_pGlobalState->motionLabels) {
 		if (ml->m_szLabel == args) {
+			g_pCompositor->focusWindow(ml->getOwner());
 			g_pKeybindManager->m_mDispatchers["exec"](ml->m_szActionCmd);
 			easymotionExitDispatch("");
 			break;
