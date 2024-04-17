@@ -7,6 +7,20 @@
 #include <hyprland/src/render/OpenGL.hpp>
 #include "globals.hpp"
 
+struct SMotionActionDesc {
+  int textSize = 15;
+	CColor textColor = CColor(0,0,0,1);
+	CColor backgroundColor = CColor(1,1,1,1);
+	std::string textFont = "Sans";
+	std::string commandString = "";
+	CCssGapData boxPadding = CCssGapData();	
+	int borderSize = 0;
+	CGradientValueData borderColor = CGradientValueData();
+	int rounding = 0;
+	std::string motionKeys = "abcdefghijklmnopqrstuvwxyz1234567890";
+};
+
+
 class CHyprEasyLabel : public IHyprWindowDecoration {
   public:
     CHyprEasyLabel(CWindow*, SMotionActionDesc *actionDesc);
