@@ -6,6 +6,7 @@
 #include <hyprland/src/Window.hpp>
 #include <hyprland/src/config/ConfigManager.hpp>
 #include "easymotionDeco.hpp"
+#include "log.hpp"
 
 inline HANDLE PHANDLE = nullptr;
 inline CFunctionHook* g_hyeasymotion_pCWindow_onUnmap = nullptr;

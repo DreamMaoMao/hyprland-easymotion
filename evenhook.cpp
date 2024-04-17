@@ -2,6 +2,18 @@
 
 typedef void (*origCWindow_onUnmap)(void*);
 
+std::string getKeynameFromKeycode(wlr_keyboard_key_event* e, SKeyboard* pKeyboard) {
+  struct wlr_keyboard *keyboard =  (struct wlr_keyboard *)pKeyboard->keyboard;
+  xkb_keycode_t keycode = e->keycode + 8;
+  xkb_keysym_t keysym = xkb_state_key_get_one_sym(keyboard->xkb_state, keycode);
+  char *tmp_keyname = new char[64];
+  xkb_keysym_get_name(keysym, tmp_keyname, 64);
+  std::string keyname = tmp_keyname;
+  delete[] tmp_keyname;
+  return keyname;
+}
+
+
 static void hkCWindow_onUnmap(void* thisptr) {
   // call the original function,Let it do what it should do
   (*(origCWindow_onUnmap)g_hyeasymotion_pCWindow_onUnmap->m_pOriginal)(thisptr);
@@ -29,7 +41,7 @@ bool oneasymotionKeypress(void *self, std::any data) {
 	std::any kany = map["keyboard"];
 	wlr_keyboard_key_event *ev = std::any_cast<wlr_keyboard_key_event *>(map["event"]);
 	SKeyboard *keyboard = std::any_cast<SKeyboard *>(kany);
-
+	std::string keyname = getKeynameFromKeycode(ev,keyboard);
 	const auto KEYCODE = ev->keycode + 8;
 
 	const xkb_keysym_t KEYSYM = xkb_state_key_get_one_sym(keyboard->xkbTranslationState, KEYCODE);
@@ -41,6 +53,7 @@ bool oneasymotionKeypress(void *self, std::any data) {
 		if (ml->m_szLabel != "") {
 			actionKeysym = xkb_keysym_from_name(ml->m_szLabel.c_str(), XKB_KEYSYM_NO_FLAGS);
 			if (actionKeysym && (actionKeysym == KEYSYM)) {
+				hypreasymotion_log(LOG,"hit key:{},owner:{}",keyname,ml->getOwner());
 				easymotionActionDispatch(ml->m_szLabel);
 				return true;
 			}

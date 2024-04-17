@@ -6,9 +6,11 @@
 void addLabelToWindow(CWindow *window, SMotionActionDesc *actionDesc, std::string &label)
 {
 	std::unique_ptr<CHyprEasyLabel> motionlabel = std::make_unique<CHyprEasyLabel>(window, actionDesc);
-	motionlabel.get()->m_szLabel = label;
-	g_pGlobalState->motionLabels.push_back(motionlabel.get());
+	auto pMl =  motionlabel.get();
+	pMl->m_szLabel = label;
+	g_pGlobalState->motionLabels.push_back(pMl);
 	HyprlandAPI::addWindowDecoration(PHANDLE, window, std::move(motionlabel));
+	hypreasymotion_log(LOG,"add label:{},owner:{}",label,window);
 }
 
 
