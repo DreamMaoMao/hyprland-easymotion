@@ -156,11 +156,12 @@ void easymotionDispatch(std::string args)
 	}
 
 	int key_idx = 0;
+	int key_length = actionDesc.motionKeys.length();
 
 	for (auto &w : g_pCompositor->m_vWindows) {
 		for (auto &m : g_pCompositor->m_vMonitors) {
 			auto pWindow = w.get();
-			if (pWindow->m_iWorkspaceID == m->activeWorkspace && !pWindow->isHidden() && pWindow->m_bIsMapped && !pWindow->m_bFadingOut) {
+			if (pWindow->m_iWorkspaceID == m->activeWorkspace &&  key_idx < key_length && !pWindow->isHidden() && pWindow->m_bIsMapped && !pWindow->m_bFadingOut) {
 					std::string lstr = actionDesc.motionKeys.substr(key_idx++, 1);
 					addLabelToWindow(pWindow, &actionDesc, lstr);
 			}
