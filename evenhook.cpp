@@ -21,7 +21,7 @@ static void hkCWindow_onUnmap(void* thisptr) {
     unsigned int CLIENTNUM = 0; 
     for (auto &w : g_pCompositor->m_vWindows){
     	CWindow *pWindow = w.get();
-    	if (pWindow->m_iWorkspaceID == g_pCompositor->m_pLastMonitor->activeWorkspace && !pWindow->isHidden() && pWindow->m_bIsMapped && !pWindow->m_bFadingOut) {
+    	if (pWindow->m_pWorkspace == g_pCompositor->m_pLastMonitor->activeWorkspace && !pWindow->isHidden() && pWindow->m_bIsMapped && !pWindow->m_bFadingOut) {
     		CLIENTNUM++;
     	}
     }    

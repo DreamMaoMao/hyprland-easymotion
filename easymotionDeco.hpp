@@ -30,7 +30,7 @@ class CHyprEasyLabel : public IHyprWindowDecoration {
 
     virtual void                       onPositioningReply(const SDecorationPositioningReply& reply);
 
-    virtual void                       draw(CMonitor*, float a, const Vector2D& offset = Vector2D());
+    virtual void                       draw(CMonitor*, float a);
 
     virtual eDecorationType            getDecorationType();
 

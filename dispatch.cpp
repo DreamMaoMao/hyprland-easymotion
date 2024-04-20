@@ -84,7 +84,7 @@ void easymotionDispatch(std::string args)
 
     for (auto &w : g_pCompositor->m_vWindows){
 		CWindow *pWindow = w.get();
-		if (pWindow->m_iWorkspaceID == g_pCompositor->m_pLastMonitor->activeWorkspace && !pWindow->isHidden() && pWindow->m_bIsMapped && !pWindow->m_bFadingOut) {
+		if (pWindow->m_pWorkspace == g_pCompositor->m_pLastMonitor->activeWorkspace && !pWindow->isHidden() && pWindow->m_bIsMapped && !pWindow->m_bFadingOut) {
 			CLIENTNUM++;
 		}
 	}
@@ -161,7 +161,7 @@ void easymotionDispatch(std::string args)
 	for (auto &w : g_pCompositor->m_vWindows) {
 		for (auto &m : g_pCompositor->m_vMonitors) {
 			auto pWindow = w.get();
-			if (pWindow->m_iWorkspaceID == m->activeWorkspace &&  key_idx < key_length && !pWindow->isHidden() && pWindow->m_bIsMapped && !pWindow->m_bFadingOut) {
+			if (pWindow->m_pWorkspace == m->activeWorkspace &&  key_idx < key_length && !pWindow->isHidden() && pWindow->m_bIsMapped && !pWindow->m_bFadingOut) {
 					std::string lstr = actionDesc.motionKeys.substr(key_idx++, 1);
 					addLabelToWindow(pWindow, &actionDesc, lstr);
 			}
