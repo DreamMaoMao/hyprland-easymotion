@@ -62,6 +62,7 @@ void easymotionExitDispatch(std::string args)
 		for (auto &ml : g_pGlobalState->motionLabels | std::ranges::views::reverse) {
 			ml->getOwner()->removeWindowDeco(ml);
 		}
+		g_pGlobalState->motionLabels.clear();
 		HyprlandAPI::invokeHyprctlCommand("dispatch", "submap reset");
 
 }
