@@ -122,7 +122,7 @@ void easymotionDispatch(std::string args)
 	actionDesc.motionKeys = *MOTIONKEYS;
 
 
-	for(int i = 0; i < emargs.size(); i++)
+	for(size_t i = 0; i < emargs.size(); i++)
 	{
 
 		CVarList kv(emargs[i], 2, ':');
