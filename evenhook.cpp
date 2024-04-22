@@ -44,6 +44,10 @@ bool oneasymotionKeypress(void *self, std::any data) {
 	std::string keyname = getKeynameFromKeycode(ev,keyboard);
 	const auto KEYCODE = ev->keycode + 8;
 
+	const auto MODS = g_pInputManager->accumulateModsFromAllKBs();
+	if(MODS != 0)
+		return false;
+
 	const xkb_keysym_t KEYSYM = xkb_state_key_get_one_sym(keyboard->xkbTranslationState, KEYCODE);
 
 	if (ev->state != WL_KEYBOARD_KEY_STATE_PRESSED) return false;
