@@ -15,6 +15,7 @@ std::string getKeynameFromKeycode(wlr_keyboard_key_event* e, SKeyboard* pKeyboar
 
 
 static void hkCWindow_onUnmap(void* thisptr) {
+
   // call the original function,Let it do what it should do
   (*(origCWindow_onUnmap)g_hyeasymotion_pCWindow_onUnmap->m_pOriginal)(thisptr);
 
@@ -66,11 +67,28 @@ bool oneasymotionKeypress(void *self, std::any data) {
 	return false;
 }
 
+bool closeWindowHook(void* self, std::any data) {
+    auto* const pWindow = std::any_cast<CWindow*>(data);
+	for (auto &ml : g_pGlobalState->motionLabels) {
+		if (ml->m_pWindow == pWindow) {
+			pWindow->removeWindowDeco(ml);
+			break;
+		}
+	}	
+
+	return false;
+
+}
+
+
 void registerEventHook()
 {
     g_hyeasymotion_pCWindow_onUnmap = HyprlandAPI::createFunctionHook(PHANDLE, (void*)&CWindow::onUnmap, (void*)&hkCWindow_onUnmap);
     g_hyeasymotion_pCWindow_onUnmap->hook();
     HyprlandAPI::registerCallbackDynamic(PHANDLE, "keyPress", [&](void *self, SCallbackInfo &info, std::any data) {
 			info.cancelled = oneasymotionKeypress(self, data);
+	});
+    HyprlandAPI::registerCallbackDynamic(PHANDLE, "closeWindow", [&](void *self, SCallbackInfo &info, std::any data) {
+			info.cancelled = closeWindowHook(self, data);
 	});
 }

@@ -64,7 +64,6 @@ public:
 	int m_iBorderSize;
 	CGradientValueData m_cBorderGradient;
 
-private:
 	double layoutWidth;
 	double layoutHeight;
 	SWindowDecorationExtents m_seExtents;
