@@ -5,6 +5,8 @@
 #include <hyprland/src/Compositor.hpp>
 #include <hyprland/src/desktop/Window.hpp>
 #include <hyprland/src/config/ConfigManager.hpp>
+#include <hyprland/src/managers/KeybindManager.hpp>
+#include <hyprland/src/devices/Keyboard.hpp>
 #include "easymotionDeco.hpp"
 #include "log.hpp"
 

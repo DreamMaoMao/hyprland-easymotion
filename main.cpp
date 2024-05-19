@@ -29,10 +29,10 @@ APICALL EXPORT PLUGIN_DESCRIPTION_INFO PLUGIN_INIT(HANDLE handle) {
 	registerDispatchers();
 	registerEventHook();
 
-	HyprlandAPI::registerCallbackDynamic(PHANDLE, "configReloaded", [&](void *self, SCallbackInfo&, std::any data) {addEasyMotionKeybinds();});
+	static auto CRHOOK = HyprlandAPI::registerCallbackDynamic(PHANDLE, "configReloaded", [&](void *self, SCallbackInfo&, std::any data) {addEasyMotionKeybinds();});
     HyprlandAPI::reloadConfig();
 
-    return {"hypreasymotion", "Easymotion navigation", "Zakk", "1.0"};
+    return {"hypreasymotion", "Easymotion navigation", "Zakk", "0.40.0"};
 }
 
 APICALL EXPORT void PLUGIN_EXIT() {

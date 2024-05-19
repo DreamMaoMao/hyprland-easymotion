@@ -3,7 +3,7 @@
 #include <any>
 #include <ranges>
 
-void addLabelToWindow(CWindow *window, SMotionActionDesc *actionDesc, std::string &label)
+void addLabelToWindow(PHLWINDOW window, SMotionActionDesc *actionDesc, std::string &label)
 {
 	std::unique_ptr<CHyprEasyLabel> motionlabel = std::make_unique<CHyprEasyLabel>(window, actionDesc);
 	auto pMl =  motionlabel.get();
@@ -161,10 +161,9 @@ void easymotionDispatch(std::string args)
 
 	for (auto &w : g_pCompositor->m_vWindows) {
 		for (auto &m : g_pCompositor->m_vMonitors) {
-			auto pWindow = w.get();
-			if (pWindow->m_pWorkspace == m->activeWorkspace &&  key_idx < key_length && !pWindow->isHidden() && pWindow->m_bIsMapped && !pWindow->m_bFadingOut) {
+			if (w->m_pWorkspace == m->activeWorkspace &&  key_idx < key_length && !w->isHidden() && w->m_bIsMapped && !w->m_bFadingOut) {
 					std::string lstr = actionDesc.motionKeys.substr(key_idx++, 1);
-					addLabelToWindow(pWindow, &actionDesc, lstr);
+					addLabelToWindow(w, &actionDesc, lstr);
 			}
 		}
 	}
